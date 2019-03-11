@@ -1,7 +1,6 @@
 require('newrelic');
 
 const express = require('express');
-const morgan = require('morgan');
 const proxy = require('http-proxy-middleware');
 const path = require('path');
 
@@ -13,7 +12,6 @@ var options = {
 }
 
 var proxyserver = proxy(options);
-app.use(morgan())
 app.use('/song/:songId/api/song_id', proxyserver);
 app.use('/song/:songId/api/song_comment', proxyserver);
 app.listen(port, () => {
