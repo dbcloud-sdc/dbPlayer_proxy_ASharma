@@ -1,0 +1,68 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 50
+      rampTo: 200
+    - duration: 60
+      arrivalRate: 100
+scenarios:
+  - name: "Song CRUD"
+    flow:
+      - post:
+          url: "/song/a/api/song_id"
+          json:
+            songname: "songname"
+            artistname: "shiasumak"
+            aimgurl: 101
+            hashtag: "doll"
+            timeelapsed: 345
+            thelength: 34
+            decibel: 3453
+            songurl: 42
+          capture:
+            json: "$.rows[0].id"
+            as: "songId"
+      - get:
+            url: "/song/{{ songId }}/api/song_id"
+      - put:
+          url: "/song/{{ songId }}/api/song_id"
+          json:
+            id: "{{ songId }}"
+            songname: "songname_updated"
+            artistname: "shiasumak"
+            aimgurl: 101
+            hashtag: "doll"
+            timeelapsed: 345
+            thelength: 34
+            decibel: 3453
+            songurl: 42
+      - post:
+          url: "/song/{{ songId }}/api/song_comment"
+          json:
+            songid: "{{ songId }}"
+            commentimage: 131
+            comment: "First!"
+            commenttime: 0
+            username: "sharmoo"
+          capture:
+            json: "$.rows[0].id"
+            as: "commentId"
+      - get:
+            url: "/song/{{ songId }}/api/song_comment"
+      - put:
+          url: "/song/{{ songId }}/api/song_comment"
+          json:
+            id: "{{ commentId }}"
+            songid: "{{ songId }}"
+            commentimage: 131
+            comment: "Second."
+            commenttime: 0
+            username: "sharmoo"
+      - delete:
+            url: "/song/{{ songId }}/api/song_comment"
+            json:
+              id: "{{ commentId }}"
+
+      - delete:
+            url: "/song/{{ songId }}/api/song_id"
