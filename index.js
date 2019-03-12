@@ -1,15 +1,19 @@
+require('newrelic');
+
 const express = require('express');
-const morgan = require('morgan');
+const proxy = require('http-proxy-middleware');
 const path = require('path');
+
 const app = express();
 const port = 3000;
 
-app.use(morgan('dev'));
-app.use('/scripts',express.static(path.resolve(__dirname, 'node_modules')))
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/song/:songId',express.static(path.join(__dirname, 'public')));
+var options = {
+  target: 'http://localhost:3002'
+}
 
-
+var proxyserver = proxy(options);
+app.use('/song/:songId/api/song_id', proxyserver);
+app.use('/song/:songId/api/song_comment', proxyserver);
 app.listen(port, () => {
-  console.log(`server running at port ${port}`);
+  console.log(`port is running on ${port}`)
 });

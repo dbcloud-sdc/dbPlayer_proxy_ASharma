@@ -1,1 +1,5 @@
 node_modules/
+artilleryperf.txt
+newrelic_agent.log
+newrelic.js
+
