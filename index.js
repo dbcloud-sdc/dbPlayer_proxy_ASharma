@@ -8,7 +8,7 @@ const app = express();
 const port = 3000;
 
 var options = {
-  target: 'http://localhost:3002'
+  target: process.env.TARGET_URL || 'http://localhost:3002'
 }
 
 var proxyserver = proxy(options);
