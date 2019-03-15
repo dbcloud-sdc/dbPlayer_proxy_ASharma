@@ -12,8 +12,25 @@ var options = {
 }
 
 var proxyserver = proxy(options);
-app.use('/song/:songId/api/song_id', proxyserver);
-app.use('/song/:songId/api/song_comment', proxyserver);
+
+app.use('/api/song/:songID/relatedtracks', proxy({
+  target: 'ec2-54-175-244-241.compute-1.amazonaws.com',
+  changeOrigin: true
+}))
+
+app.use('/api/song/:songID/description', proxy({
+  target: 'ec2-52-32-197-59.us-west-2.compute.amazonaws.com',
+  changeOrigin: true
+}))
+
+app.use('/api/song/:songID/comments', proxy({
+  target: '172.31.35.99',
+  changeOrigin: true
+}))
+
+
+app.use('api/song/:songId/song_id', proxyserver);
+app.use('api/song/:songId/song_comment', proxyserver);
 app.listen(port, () => {
   console.log(`port is running on ${port}`)
 });
