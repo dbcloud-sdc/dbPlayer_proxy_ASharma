@@ -13,6 +13,10 @@ var options = {
 
 var proxyserver = proxy(options);
 
+app.get('/loaderio-*/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../loader.config.js'));
+});
+
 app.use('/api/song/:songID/relatedtracks', proxy({
   target: 'ec2-54-175-244-241.compute-1.amazonaws.com',
   changeOrigin: true
