@@ -31,6 +31,7 @@ app.use('/api/song/:songID/comments', proxy({
 
 app.use('api/song/:songId/song_id', proxyserver);
 app.use('api/song/:songId/song_comment', proxyserver);
+app.use(express.static('./public'))
 app.listen(port, () => {
   console.log(`port is running on ${port}`)
 });
